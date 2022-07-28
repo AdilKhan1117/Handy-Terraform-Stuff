@@ -1,1 +1,22 @@
+1. terraform fmt --diff
+main.tf
+--- old/main.tf
++++ new/main.tf
+@@ -11,5 +11,5 @@
+ 
+ resource "docker_image" "nodered_image" {
+   name = "nodered/node-red:latest"
+- 
++
+ }
+\ No newline at end of file
 
+Using TF Fmt command, allows you to correctly format the text, the diff command allows you to see the before vs after. 
+
+2. Terraform init --upgrade
+   when changing terraform provider versions to something else, you have use the command above. 
+   
+3. Terraform plan -out xxNAMExx 
+   This allows you to save a plan file and execute using Terraform apply xxNamexx
+   
+4. Terraform plan -destroy = Tells you what it is going to destroy 
