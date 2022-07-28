@@ -31,3 +31,5 @@ resource "docker_container" "nodered_comntainer" {
 }                                                         docker_image = name of resource 
                                                           nodered_image = name of resource also 
                                                           latest = attribute reference 
+
+
