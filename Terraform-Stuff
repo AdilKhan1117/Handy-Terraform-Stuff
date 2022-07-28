@@ -20,3 +20,14 @@ Using TF Fmt command, allows you to correctly format the text, the diff command 
    This allows you to save a plan file and execute using Terraform apply xxNamexx
    
 4. Terraform plan -destroy = Tells you what it is going to destroy 
+
+5. resource "docker_image" "nodered_image" {
+  name = "nodered/node-red:latest"
+}
+
+resource "docker_container" "nodered_comntainer" {
+    name = "nodered"
+    image = docker_image.nodered_image:latest  <<<------- Referencing name and latest from terraform attribute 
+}                                                         docker_image = name of resource 
+                                                          nodered_image = name of resource also 
+                                                          latest = attribute reference 
