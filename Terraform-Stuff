@@ -270,9 +270,40 @@ Terraform console
 > join(":",[docker_container.nodered_container.ip_address, docker_container.nodered_container.name])
 "172.17.0.2:nodered"
 
+12. 
+ubuntu:~/environment/terraform-docker $ terraform output
+IP-Address = "172.17.0.2"
+container_name = "nodered"
+container_ports = tolist([
+  {
+    "external" = 1880
+    "internal" = 1880
+    "ip" = "0.0.0.0"
+    "protocol" = "tcp"
+  },
 
+11. Joining join together
 
+output "IP-Address" {
+value       = join(";", [docker_container.nodered_container.ip_address, docker_container.nodered_container.ports[0].external])
+description = "The IP Address and the external port for container"
 
+12. Random string
+
+resource "random_string" "random" {
+  length  = 4
+  special = false
+  upper   = false
+}
+
+resource "docker_container" "nodered_container" {
+  name  = join("-", ["nodered", random_string.random.result])
+  image = docker_image.nodered_image.latest
+  ports {
+    internal = 1880
+    #external = 1880
+  }
+}
 
 
 
