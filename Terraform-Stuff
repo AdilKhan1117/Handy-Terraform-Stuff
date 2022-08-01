@@ -305,5 +305,62 @@ resource "docker_container" "nodered_container" {
   }
 }
 
+resource "random_string" "random" {
+  length  = 4
+  special = false
+  upper   = false
+}
 
+resource "random_string" "random2" {
+  length  = 4
+  special = false
+  upper   = false
+}
 
+resource "docker_container" "nodered_container" {
+  name  = join("-", ["nodered", random_string.random.result])
+  image = docker_image.nodered_image.latest
+  ports {
+    internal = 1880
+    #external = 1880
+  }
+}
+
+resource "docker_container" "nodered_container2" {
+  name  = join("-", ["nodered2", random_string.random2.result])
+  image = docker_image.nodered_image.latest
+  ports {
+    internal = 1880
+    #external = 1880
+  }
+}
+
+output "container1" {
+  value       = join(";", [docker_container.nodered_container.name])
+  description = "The IP Address and the external port for container"
+}
+output "container2" {
+  value       = join(";", [docker_container.nodered_container2.name])
+  description = "The IP Address and the external port for container"
+}
+
+13. Using count.index
+
+resource "random_string" "random" {
+  count   = 2
+  length  = 4
+  special = false
+  upper   = false
+}
+
+resource "docker_container" "nodered_container" {
+  count = 2
+  name  = join("-", ["nodered", random_string.random[count.index].result])
+  image = docker_image.nodered_image.latest
+  ports {
+    internal = 1880
+    #external = 1880
+  }
+}
+
+14. 
