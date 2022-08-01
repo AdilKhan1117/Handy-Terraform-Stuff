@@ -32,4 +32,247 @@ resource "docker_container" "nodered_comntainer" {
                                                           nodered_image = name of resource also 
                                                           latest = attribute reference 
 
+6. 
+
+  "version": 4,
+  "terraform_version": "1.2.4",
+  "serial": 11,   <<<<<----------------------------------Serial is udated, anytime object is updated, so whichever has the latest.
+  "lineage": "c38b1dd4-97c7-6979-60de-b881c008ed9b",
+  "outputs": {},
+  "resources": [
+
+7.  After performing a destroy, terraform will have a new statefile with minus the resources destroyed however
+    Terraform will also have a terraform.tfstate.backup which can be used to restore the previous state before it was 
+    destroyed. 
+    
+    
+8.  Installing JQ, will allow you to see terraform state much more visible and a human readable format. 
+
+ubuntu:~/environment/terraform-docker $ sudo apt install jq
+ubuntu:~/environment/terraform-docker $ terraform show -json | jq
+{
+  "format_version": "1.0",
+  "terraform_version": "1.2.4",
+  "values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "docker_container.nodered_comntainer",
+          "mode": "managed",
+          "type": "docker_container",
+          "name": "nodered_comntainer",
+          "provider_name": "registry.terraform.io/kreuzwerker/docker",
+          "schema_version": 2,
+          "values": {
+            "attach": false,
+            "bridge": "",
+            "capabilities": [],
+            "command": [],
+            "container_logs": null,
+            "cpu_set": "",
+            "cpu_shares": 0,
+            "destroy_grace_seconds": null,
+            "devices": [],
+            "dns": null,
+            "dns_opts": null,
+            "dns_search": null,
+            "domainname": "",
+            "entrypoint": [
+              "./entrypoint.sh"
+            ],
+            "env": [],
+            "exit_code": null,
+            "gateway": "172.17.0.1",
+            "group_add": null,
+            "healthcheck": [
+              {
+                "interval": "0s",
+                "retries": 0,
+                "start_period": "0s",
+                "test": [
+                  "CMD-SHELL",
+                  "node /healthcheck.js"
+                ],
+                "timeout": "0s"
+              }
+            ],
+            "host": [],
+            "hostname": "1ca4bf335284",
+            "id": "1ca4bf335284aaf2b417ec641c587f22e2f380586c48b7fcee65d1d8d4af33b6",
+            "image": "sha256:bf4e92b68063969317142d5f6163ad0ef899d625c8467101406739728322dbb1",
+            "init": false,
+            "ip_address": "172.17.0.2",
+            "ip_prefix_length": 16,
+            "ipc_mode": "private",
+            "labels": [],
+            "links": null,
+            "log_driver": "json-file",
+            "log_opts": null,
+            "logs": false,
+            "max_retry_count": 0,
+            "memory": 0,
+            "memory_swap": 0,
+            "mounts": [],
+            "must_run": true,
+            "name": "nodered",
+            "network_alias": null,
+            "network_data": [
+              {
+                "gateway": "172.17.0.1",
+                "global_ipv6_address": "",
+                "global_ipv6_prefix_length": 0,
+                "ip_address": "172.17.0.2",
+                "ip_prefix_length": 16,
+                "ipv6_gateway": "",
+                "network_name": "bridge"
+              }
+            ],
+            "network_mode": "default",
+            "networks": null,
+            "networks_advanced": [],
+            "pid_mode": "",
+            "ports": [
+              {
+                "external": 1880,
+                "internal": 1880,
+                "ip": "0.0.0.0",
+                "protocol": "tcp"
+              }
+            ],
+            "privileged": false,
+            "publish_all_ports": false,
+            "read_only": false,
+            "remove_volumes": true,
+            "restart": "no",
+            "rm": false,
+            "security_opts": [],
+            "shm_size": 64,
+            "start": true,
+            "stdin_open": false,
+            "storage_opts": null,
+            "sysctls": null,
+            "tmpfs": null,
+            "tty": false,
+            "ulimit": [],
+            "upload": [],
+            "user": "node-red",
+            "userns_mode": "",
+            "volumes": [],
+            "working_dir": "/usr/src/node-red"
+          },
+          "sensitive_values": {
+            "capabilities": [],
+            "command": [],
+            "devices": [],
+            "entrypoint": [
+              false
+            ],
+            "env": [],
+            "healthcheck": [
+              {
+                "test": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "host": [],
+            "labels": [],
+            "mounts": [],
+            "network_data": [
+              {}
+            ],
+            "networks_advanced": [],
+            "ports": [
+              {}
+            ],
+            "security_opts": [],
+            "ulimit": [],
+            "upload": [],
+            "volumes": []
+          },
+          "depends_on": [
+            "docker_image.nodered_image"
+          ]
+        },
+        {
+          "address": "docker_image.nodered_image",
+          "mode": "managed",
+          "type": "docker_image",
+          "name": "nodered_image",
+          "provider_name": "registry.terraform.io/kreuzwerker/docker",
+          "schema_version": 0,
+          "values": {
+            "build": [],
+            "force_remove": null,
+            "id": "sha256:bf4e92b68063969317142d5f6163ad0ef899d625c8467101406739728322dbb1nodered/node-red:latest",
+            "keep_locally": null,
+            "latest": "sha256:bf4e92b68063969317142d5f6163ad0ef899d625c8467101406739728322dbb1",
+            "name": "nodered/node-red:latest",
+            "output": null,
+            "pull_trigger": null,
+            "pull_triggers": null,
+            "repo_digest": "nodered/node-red@sha256:aca71f523d1cd0ea19cb8d2ccdc2c35076dd8cac8a93226365535beee0d24bea"
+          },
+          "sensitive_values": {
+            "build": []
+          }
+        }
+      ]
+    }
+  }
+}
+ubuntu:~/environment/terraform-docker $ ter 
+
+9. 
+
+ubuntu:~/environment/terraform-docker $ terraform console
+> docker_container.nodered_container.name
+"nodered"
+> 
+
+> docker_container.nodered_container.ip_address
+"172.17.0.2"
+> 
+
+> 
+
+> docker_container.nodered_container.ports
+tolist([
+  {
+    "external" = 1880
+    "internal" = 1880
+    "ip" = "0.0.0.0"
+    "protocol" = "tcp"
+  },
+])
+>  
+
+10. Terraform output, displays information about a resource 
+
+resource "docker_container" "nodered_container" {
+  name  = "nodered"
+  image = docker_image.nodered_image.latest
+  ports {
+    internal = 1880
+    external = 1880
+  }
+}
+
+output "IP-Address" {
+  value = docker_container.nodered_container.ip_address
+}
+
+
+11. Using the join functions:
+Terraform console
+
+> join(":",[docker_container.nodered_container.ip_address, docker_container.nodered_container.name])
+"172.17.0.2:nodered"
+
+
+
+
+
+
 
