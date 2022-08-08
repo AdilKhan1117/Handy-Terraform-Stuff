@@ -363,4 +363,7 @@ resource "docker_container" "nodered_container" {
   }
 }
 
-14. 
+14. Object 'Count', can only be used in module, resource and data blocks and only when the count 
+    argument is set. 
+    
+15. 
