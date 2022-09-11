@@ -366,4 +366,48 @@ resource "docker_container" "nodered_container" {
 14. Object 'Count', can only be used in module, resource and data blocks and only when the count 
     argument is set. 
     
-15. 
+    
+15. Terraform console to use 'for loop' 
+
+[for i in docker_container.nodered_container[*]: i.name]
+[
+  "nodered-z93b",
+  "nodered-ohq2",
+]
+
+> [for i in docker_container.nodered_container[*]: i.ports]
+[
+  tolist([
+    {
+      "external" = 49155
+      "internal" = 1880
+      "ip" = "0.0.0.0"
+      "protocol" = "tcp"
+    },
+  ]),
+  tolist([
+    {
+      "external" = 49156
+      "internal" = 1880
+      "ip" = "0.0.0.0"
+      "protocol" = "tcp"
+    },
+  ]),
+]
+
+}
+output "ip-address" {
+  value       = [for i in docker_container.nodered_container[*] : join(":", [i.ip_address],i.ports[*]["external"])]
+  description = "The IP Address and the external port for container"
+}
+
+
+16. 
+
+
+
+
+
+
+
+
